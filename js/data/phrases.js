@@ -93,6 +93,38 @@ const RAW = {
     ['Big smile!', '/bɪɡ smaɪl/', 'Kocaman gülümseme!'],
     ['You make me so happy.', '/juː meɪk miː soʊ ˈhæpi/', 'Beni çok mutlu ediyorsun.'],
   ]],
+  // 4–12 ay: plandaki İngilizce örnekler ve onların basit uzantıları.
+  nesne: ['Nesnelere ad ver', [
+    ['Look! A duck.', '/lʊk ə dʌk/', 'Bak! Bir ördek.'],
+    ['Quack, quack!', '/kwæk kwæk/', 'Vak vak!'],
+    ['Can you see the duck?', '/kæn juː siː ðə dʌk/', 'Ördeği görebiliyor musun?'],
+  ]],
+  jest: ['Jest ve kelime', [
+    ['Up!', '/ʌp/', 'Yukarı! (Kucağa!)'],
+    ['More?', '/mɔːr/', 'Biraz daha?'],
+    ['All done!', '/ɔːl dʌn/', 'Bitti!'],
+    ['Bye-bye!', '/baɪ baɪ/', 'Bay bay!'],
+  ]],
+  sesten: ['Sesten kelimeye', [
+    ['Ba-ba… ball!', '/bɑː bɑː bɔːl/', 'Ba-ba… top!'],
+    ['Ball!', '/bɔːl/', 'Top!'],
+    ['You said ball!', '/juː sed bɔːl/', 'Top dedin!'],
+  ]],
+  top: ['Top ve nesneler', [
+    ['Ball! A red ball.', '/bɔːl ə red bɔːl/', 'Top! Kırmızı bir top.'],
+    ['Throw the ball!', '/θroʊ ðə bɔːl/', 'Topu at!'],
+    ['Where is the ball?', '/wer ɪz ðə bɔːl/', 'Top nerede?'],
+  ]],
+  elsallama: ['El çırpma ve el sallama', [
+    ['Bye-bye!', '/baɪ baɪ/', 'Bay bay!'],
+    ['Wave bye-bye.', '/weɪv baɪ baɪ/', 'Bay bay yap.'],
+    ['Clap, clap, clap!', '/klæp klæp klæp/', 'Çırp çırp çırp!'],
+  ]],
+  kelime: ['Kelimeyi genişlet', [
+    ['Da!', '/dɑː/', 'Da!'],
+    ['Yes, a dog!', '/jes ə dɔːɡ/', 'Evet, bir köpek!'],
+    ['Good try!', '/ɡʊd traɪ/', 'Güzel denedin!'],
+  ]],
 };
 
 export const PACKS = Object.fromEntries(
@@ -111,11 +143,14 @@ export const PACKS = Object.fromEntries(
 );
 
 // Şu anki dönem (0–3 ay) için görev başına özel paket; diğerleri başlığa/kategoriye göre.
-const TASK_PACK = {
+export const TASK_PACK = {
   '0-3-t1': 'tummy', '0-3-t2': 'tummy', '0-3-t3': 'sarki', '0-3-t4': 'takip', '0-3-t5': 'kesif',
   '0-3-t6': 'sohbet', '0-3-t7': 'konusma', '0-3-t8': 'konusma', '0-3-t9': 'bez', '0-3-t10': 'kitap',
   '0-3-z1': 'bez', '0-3-z2': 'sohbet', '0-3-z3': 'takip', '0-3-z4': 'kesif',
   '0-3-z5': 'ayna', '0-3-z6': 'cee', '0-3-z7': 'sevgi', '0-3-z8': 'konusma', '0-3-t11': 'kitap',
+  '4-6-t11': 'nesne', '4-6-z1': 'nesne', '4-6-t5': 'ayna', '4-6-t8': 'sohbet', '4-6-z8': 'sevgi',
+  '7-9-t6': 'cee', '7-9-t9': 'jest', '7-9-t11': 'jest', '7-9-z1': 'sesten', '7-9-z2': 'jest',
+  '10-12-t7': 'elsallama', '10-12-t8': 'top', '10-12-t11': 'top', '10-12-z1': 'kelime',
 };
 const CATEGORY_PACK = { hareket: 'hareket', bilissel: 'kesif', dil: 'konusma', duygusal: 'sevgi' };
 
