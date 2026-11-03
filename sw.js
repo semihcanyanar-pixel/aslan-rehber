@@ -29,6 +29,8 @@ const SHELL = [
   'assets/baba.jpg',
   'assets/koc.png',
   'assets/koc-dinleyen.png',
+  'assets/koc-mutlu.png',
+  'assets/koc-tesvik.png',
   'assets/anne.jpg',
   'assets/av_aslan.jpg',
   'assets/av_anne.jpg',

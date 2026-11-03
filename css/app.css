@@ -233,6 +233,8 @@ body.sheet-open { overflow: hidden; }
 .coach-status { margin: 0; font-size: 13px; font-weight: 700; color: var(--tag-duygusal-fg); }
 .coach-note { margin: 0; font-size: 12px; line-height: 1.4; color: var(--text-2); }
 @media (prefers-reduced-motion: no-preference) {
+  .coach-avatar img.swap { animation: face-pop 0.22s ease-out; }
+  @keyframes face-pop { from { transform: scale(0.92); opacity: 0.6; } to { transform: none; opacity: 1; } }
   .sheet { animation: sheet-up 0.22s ease-out; }
   @keyframes sheet-up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 }

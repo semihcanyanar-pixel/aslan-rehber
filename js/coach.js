@@ -31,11 +31,36 @@ export function phraseListHtml(phrases) {
     <p class="coach-status" role="status" hidden>Bu cihazda sesli okuma kullanılamıyor.</p>`;
 }
 
+// Ellie'nin ifadeleri (karakter sayfasından kırpıldı). Cümle çalınca: mutlu, sonra "sıra Aslan'da" teşvik, sonra normal.
+const EXPRESSIONS = {
+  normal: COACH_IMAGE,
+  mutlu: 'assets/koc-mutlu.png',
+  tesvik: 'assets/koc-tesvik.png',
+};
+let expressionTimers = [];
+
+function express(container, name) {
+  container.querySelectorAll('.coach-avatar img').forEach((img) => {
+    if (img.getAttribute('src') === EXPRESSIONS[name]) return;
+    img.setAttribute('src', EXPRESSIONS[name]);
+    img.classList.remove('swap');
+    void img.offsetWidth;
+    img.classList.add('swap');
+  });
+}
+
 export function bindListen(container, phrases) {
+  expressionTimers.forEach(clearTimeout);
   container.querySelectorAll('.listen').forEach((b) =>
     b.addEventListener('click', () => {
       const phrase = phrases.find((p) => p.id === b.dataset.phrase);
       container.querySelector('.coach-status').hidden = speak(phrase);
+      expressionTimers.forEach(clearTimeout);
+      express(container, 'mutlu');
+      expressionTimers = [
+        setTimeout(() => express(container, 'tesvik'), 2200),
+        setTimeout(() => express(container, 'normal'), 5500),
+      ];
     })
   );
 }
