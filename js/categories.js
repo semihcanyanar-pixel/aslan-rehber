@@ -1,0 +1,17 @@
+export const CATEGORY = {
+  duygusal: { label: 'Duygusal', bg: 'var(--tag-duygusal-bg)', fg: '#C46A44', stroke: false, path: 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z' },
+  hareket: { label: 'Fiziksel', bg: 'var(--tag-hareket-bg)', fg: '#4C6A58', stroke: true, path: 'M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12' },
+  dil: { label: 'Dil', bg: 'var(--tag-dil-bg)', fg: '#4E6A99', stroke: true, path: 'M4 5h16v11H9l-5 4z' },
+  bilissel: { label: 'Bilişsel', bg: 'var(--tag-bilissel-bg)', fg: '#8C6A1E', stroke: true, path: 'M4 5c3-1 6 0 8 2 2-2 5-3 8-2v13c-3-1-6 0-8 2-2-2-5-3-8-2z' },
+};
+
+export const IMAGES = { gogus: { baba: 'assets/baba.jpg', anne: 'assets/anne.jpg' } };
+export const IMAGE_ALT = {
+  baba: 'Baba kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, yüz yüze bakışıyorlar',
+  anne: 'Anne kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, gülümseyerek bakışıyorlar',
+};
+
+export function categoryIcon(cat, size = 16) {
+  const attrs = cat.stroke ? `fill="none" stroke="${cat.fg}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"` : `fill="${cat.fg}"`;
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" ${attrs} aria-hidden="true"><path d="${cat.path}"/></svg>`;
+}

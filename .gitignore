@@ -1,0 +1,13 @@
+# Herkese açık depo: yalnızca uygulamanın çalışması için gerekenler girer.
+# Aşağıdakiler yalnızca bu bilgisayarda kalır.
+/*
+!/.gitignore
+!/index.html
+!/manifest.webmanifest
+!/sw.js
+!/robots.txt
+!/css/
+!/js/
+!/assets/
+!/audio/
+!/icons/
