@@ -2,6 +2,7 @@ import { PACKS } from '../data/phrases.js';
 import { phraseListHtml, bindListen, stopSpeaking, coachIcon, coachListeningImage, coachTitle } from '../coach.js';
 import { tabbar } from '../nav.js';
 
+const rhyme = PACKS.sarki.phrases[0];
 const CATEGORIES = ['bez', 'banyo', 'uyku', 'beslenme', 'oyun', 'tummy', 'kitap', 'sarki'];
 
 export function render(root) {
@@ -28,6 +29,11 @@ export function render(root) {
         ${phraseListHtml(pack.phrases)}
 
         <div class="coach-tip"><img src="${coachListeningImage()}" alt=""><div><span class="eyebrow eyebrow--light">NASIL KONUŞMALI</span><p>${pack.tip}</p></div></div>
+        <section class="rhyme">
+          <span class="eyebrow">TEKERLEME ÖNERİSİ</span>
+          ${phraseListHtml([rhyme])}
+          <p class="rhyme-note">Uyku öncesi, sakin tempoda söyle.</p>
+        </section>
         <p class="coach-note">Kaynak: plan (Harvard, servis-dönüş). Cümleler ve telaffuz yazımı (IPA, Amerikan aksanı) taslaktır, henüz doğrulanmadı.</p>
 
         ${tabbar('#/ingilizce')}
@@ -39,7 +45,7 @@ export function render(root) {
         draw();
       })
     );
-    bindListen(root, pack.phrases);
+    bindListen(root, [...pack.phrases, rhyme]);
   };
 
   draw();

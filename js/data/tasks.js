@@ -13,8 +13,26 @@ const NONE = [];
 const RAW = {
   '0-3': {
     temel: [
-      ['sabah', 'ikisi', 'yok', 'hareket', 'Kısa tummy time', 'Bez değişiminden ya da uykudan sonra, Aslan uyanıkken ve gözetim altındayken 3–5 dakikayla başla. Günde 2–3 kez; 7. haftaya kadar günde toplam 15–30 dakikaya çıkar.', AAP, { image: 'gogus' }],
-      ['ogle', 'ikisi', 'yok', 'hareket', 'Göğüste tummy time', 'En kolay yol: sırtüstü uzan, Aslan göğsünde. Sonra yerde battaniye, oyuncak tam uzanamayacağı mesafede.', NONE, { image: 'gogus' }],
+      ['sabah', 'ikisi', 'yok', 'hareket', 'Kısa tummy time', 'Bez değişiminden ya da uykudan sonra, Aslan uyanıkken ve gözetim altındayken 3–5 dakikayla başla. Günde 2–3 kez; 7. haftaya kadar günde toplam 15–30 dakikaya çıkar.', AAP, {
+        image: 'gogus',
+        timer: true,
+        steps: [
+          'Aslan uyanıkken ve gözetim altındayken yap; bez değişiminden ya da uykudan sonra uygun.',
+          '3–5 dakikayla başla.',
+          'Günde 2–3 kez tekrarla; 7. haftaya kadar günde toplam 15–30 dakikaya çıkar.',
+          'Sen uykuya dalıyorsan ya da Aslan huysuzlanıyorsa hemen bitir.',
+        ],
+      }],
+      ['ogle', 'ikisi', 'yok', 'hareket', 'Göğüste tummy time', 'En kolay yol: sırtüstü uzan, Aslan göğsünde. Sonra yerde battaniye, oyuncak tam uzanamayacağı mesafede.', NONE, {
+        image: 'gogus',
+        timer: true,
+        steps: [
+          'Sırtüstü uzan, Aslan göğsünde olsun.',
+          'Aslan uyanık ve gözetim altında olsun; uykuya dalarsan hemen bitir.',
+          'Alışınca yerde battaniye üzerinde dene.',
+          'Oyuncağı tam uzanamayacağı mesafeye koy.',
+        ],
+      }],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Şarkıyla kol-bacak hareketi', 'Şarkı söylerken kollarını ve bacaklarını nazikçe hareket ettir.', CDC],
       ['ogle', 'ikisi', 'yok', 'bilissel', 'Görsel takip oyunu', 'Parlak bir oyuncağı yavaşça sağdan sola, yukarıdan aşağı gezdir; gözüyle takip ediyor mu bak.', CDC],
       ['ogle', 'ikisi', 'yok', 'bilissel', 'Kontrastlı kartlar ve senin yüzün', 'Siyah-beyaz, yüksek kontrastlı kartlar ve en çok da senin yüzün.', NONE],

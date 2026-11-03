@@ -51,6 +51,40 @@ async function playFile(src, fallbackText) {
   }
 }
 
+// Kendi sesini kaydet ve dinle. Kayıt yalnızca bellekte tutulur, hiçbir yere gönderilmez.
+let recorder = null;
+let recUrl = null;
+
+export const canRecord = () => !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+export const isRecording = () => recorder?.state === 'recording';
+
+export async function startRecording(onDone, maxMs = 6000) {
+  stopSpeaking();
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const chunks = [];
+  const rec = new MediaRecorder(stream);
+  recorder = rec;
+  rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+  rec.onstop = () => {
+    clearTimeout(rec.timer);
+    stream.getTracks().forEach((t) => t.stop());
+    onDone(new Blob(chunks, { type: rec.mimeType }));
+  };
+  rec.timer = setTimeout(stopRecording, maxMs);
+  rec.start();
+}
+
+export function stopRecording() {
+  if (isRecording()) recorder.stop();
+}
+
+export function playBlob(blob) {
+  if (recUrl) URL.revokeObjectURL(recUrl);
+  recUrl = URL.createObjectURL(blob);
+  current = new Audio(recUrl);
+  current.play().catch(() => {});
+}
+
 // Ses dosyası varsa onu, yoksa cihaz sesini kullanır. Çalamazsa false döner.
 export function speak(phrase) {
   stopSpeaking();

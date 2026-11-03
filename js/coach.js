@@ -1,5 +1,5 @@
 import { packFor } from './data/phrases.js';
-import { speak, stopSpeaking } from './audio.js';
+import { speak, stopSpeaking, canRecord, startRecording, stopRecording, isRecording, playBlob } from './audio.js';
 import { openSheet } from './sheet.js';
 
 const COACH_IMAGE = 'assets/koc.png';
@@ -8,7 +8,8 @@ export const COACH_NAME = 'Ellie';
 
 const BUBBLE = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 10h8M8 13h5"/></svg>';
 const SPEAKER = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9v6h4l5 4V5L9 9z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg>';
-const CLOSE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+const MIC = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F2B26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+const CLOSE ='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
 
 export const coachIcon = () => (COACH_IMAGE ? `<img src="${COACH_IMAGE}" alt="">` : BUBBLE);
 export const coachListeningImage = () => COACH_LISTENING_IMAGE;
@@ -24,7 +25,10 @@ export function phraseListHtml(phrases) {
           <span class="ipa">${p.ipa}</span>
           <span class="tr">${p.tr}</span>
         </div>
-        <button class="listen" data-phrase="${p.id}" aria-label="Dinle: ${p.en}">${SPEAKER}</button>
+        <div class="phrase-actions">
+          ${canRecord() ? `<button class="rec" data-phrase="${p.id}" aria-pressed="false" aria-label="Kendi sesini kaydet: ${p.en}">${MIC}</button>` : ''}
+          <button class="listen" data-phrase="${p.id}" aria-label="Dinle: ${p.en}">${SPEAKER}</button>
+        </div>
       </article>`
     )
     .join('')}</div>
@@ -49,12 +53,41 @@ function express(container, name) {
   });
 }
 
+// Durum mesajı, tıklanan düğmenin kendi cümle listesinin altındaki satırda gösterilir.
+function say(container, message, from) {
+  const el = from?.closest('.phrases')?.nextElementSibling ?? container.querySelector('.coach-status');
+  if (!el) return;
+  el.hidden = !message;
+  if (message) el.textContent = message;
+}
+
+function bindRecord(container) {
+  container.querySelectorAll('.rec').forEach((b) =>
+    b.addEventListener('click', async () => {
+      if (isRecording()) return stopRecording();
+      try {
+        b.setAttribute('aria-pressed', 'true');
+        say(container, 'Kaydediyor… söyle, bitince düğmeye tekrar bas (en fazla 6 saniye).', b);
+        await startRecording((blob) => {
+          b.setAttribute('aria-pressed', 'false');
+          say(container, 'Kendi sesini dinliyorsun. Karşılaştırmak için hoparlör düğmesine bas. Kayıt yalnızca bu cihazda kalır.', b);
+          playBlob(blob);
+        });
+      } catch {
+        b.setAttribute('aria-pressed', 'false');
+        say(container, 'Mikrofona erişilemedi. Tarayıcı ayarlarından mikrofon iznini aç.', b);
+      }
+    })
+  );
+}
+
 export function bindListen(container, phrases) {
   expressionTimers.forEach(clearTimeout);
+  bindRecord(container);
   container.querySelectorAll('.listen').forEach((b) =>
     b.addEventListener('click', () => {
       const phrase = phrases.find((p) => p.id === b.dataset.phrase);
-      container.querySelector('.coach-status').hidden = speak(phrase);
+      say(container, speak(phrase) ? null : 'Bu cihazda sesli okuma kullanılamıyor.', b);
       expressionTimers.forEach(clearTimeout);
       express(container, 'mutlu');
       expressionTimers = [

@@ -46,6 +46,45 @@ export function render(root, navigate, id) {
   let view = me;
   let playing = false;
 
+  // Süre sayacı: ekran yeniden çizilse de sayaç durumu burada kalır; ekrandan çıkılınca kendini durdurur.
+  let elapsed = 0;
+  let startedAt = 0;
+  let running = false;
+  let ticker = null;
+  const seconds = () => elapsed + (running ? (Date.now() - startedAt) / 1000 : 0);
+  const paintTimer = () => {
+    const el = root.querySelector('[data-time]');
+    if (!el) {
+      clearInterval(ticker);
+      ticker = null;
+      running = false;
+      return;
+    }
+    const s = Math.floor(seconds());
+    el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+    root.querySelector('[data-fill]').style.width = `${Math.min(s / 300, 1) * 100}%`;
+    root.querySelector('[data-timer-toggle]').textContent = running ? 'Duraklat' : s > 0 ? 'Devam' : 'Başlat';
+  };
+  const bindTimer = () => {
+    paintTimer();
+    root.querySelector('[data-timer-toggle]').addEventListener('click', () => {
+      if (running) {
+        elapsed = seconds();
+        running = false;
+      } else {
+        startedAt = Date.now();
+        running = true;
+        ticker ??= setInterval(paintTimer, 250);
+      }
+      paintTimer();
+    });
+    root.querySelector('[data-timer-reset]').addEventListener('click', () => {
+      elapsed = 0;
+      running = false;
+      paintTimer();
+    });
+  };
+
   const draw = () => {
     stopSpeaking();
     const done = getDone(key).includes(id);
@@ -89,6 +128,23 @@ export function render(root, navigate, id) {
           </div>
 
           ${
+            task.steps
+              ? `<ol class="steps">${task.steps.map((s, i) => `<li><span class="step-n">${i + 1}</span><span>${s}</span></li>`).join('')}</ol>`
+              : ''
+          }
+
+          ${
+            task.timer
+              ? `<section class="timer" aria-label="Süre sayacı">
+                   <div class="timer-top"><span class="timer-time" data-time>0:00</span><span class="timer-ref">3–5 dakikayla başla (AAP)</span></div>
+                   <div class="timer-bar"><div class="timer-fill" data-fill></div><span class="timer-mark" title="3 dakika"></span></div>
+                   <div class="timer-actions"><button class="timer-btn" data-timer-toggle>Başlat</button><button class="timer-btn timer-btn--ghost" data-timer-reset>Sıfırla</button></div>
+                   <p class="timer-note">Bu bir hedef değil: Aslan huysuzlanırsa süre dolmadan bırak.</p>
+                 </section>`
+              : ''
+          }
+
+          ${
             task.image
               ? `<div class="segment segment--2" role="tablist" aria-label="Kim yapıyor">
                    <button role="tab" data-view="baba" aria-selected="${view === 'baba'}">Baba · English</button>
@@ -113,6 +169,7 @@ export function render(root, navigate, id) {
         </div>
       </main>`;
 
+    if (task.timer) bindTimer();
     if (playing && frames) playFrames(root.querySelectorAll('.hero-art img.frame'));
     root.querySelector('[data-play]')?.addEventListener('click', () => {
       playing = !playing;
