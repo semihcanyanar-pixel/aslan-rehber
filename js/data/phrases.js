@@ -2,6 +2,7 @@
 // Ses dosyası: audio/<cümle-id>.mp3 (cümle id'si <paket>-<sıra>, örn. bez-1).
 // Dosyaları scripts/ses-uret.mjs üretir ve audio-list.js'i günceller; elle koyarsan id'yi oraya yaz.
 import { AUDIO_IDS } from './audio-list.js';
+import { EXTEND, NEW_PACKS, BY_PERIOD, CATEGORY_ORDER } from './phrases-more.js';
 
 export const AUDIO = new Set(AUDIO_IDS);
 
@@ -127,6 +128,14 @@ const RAW = {
   ]],
 };
 
+// Ek cümleler: var olan paketlerin sonuna, yeni 0–3 ay kategorileri ve daha büyük dönemler için kategori paketleri.
+for (const [key, extra] of Object.entries(EXTEND)) RAW[key][1].push(...extra);
+Object.assign(RAW, NEW_PACKS);
+const SUFFIX = { '4-6': '46', '7-9': '79', '10-12': '1012' };
+for (const [period, cats] of Object.entries(BY_PERIOD)) {
+  for (const [cat, pack] of Object.entries(cats)) RAW[`${cat}_${SUFFIX[period]}`] = pack;
+}
+
 export const PACKS = Object.fromEntries(
   Object.entries(RAW).map(([key, [title, phrases]]) => [
     key,
@@ -157,4 +166,12 @@ const CATEGORY_PACK = { hareket: 'hareket', bilissel: 'kesif', dil: 'konusma', d
 export function packFor(task) {
   const key = TASK_PACK[task.id] ?? (/kitap/i.test(task.title) ? 'kitap' : CATEGORY_PACK[task.category]);
   return PACKS[key];
+}
+
+// Koç ekranı: seçilen dönem için kategori paketleri (aynı 12 kategori, yaşa uygun cümlelerle).
+export function catalogFor(period) {
+  return CATEGORY_ORDER.map((cat) => {
+    if (period === '0-3') return PACKS[cat === 'hareket' ? 'tummy' : cat];
+    return PACKS[`${cat}_${SUFFIX[period]}`];
+  });
 }

@@ -1,4 +1,4 @@
-const CACHE = 'aslan-v4';
+const CACHE = 'aslan-v5';
 const SHELL = [
   './',
   'js/cloud.js',
@@ -23,6 +23,8 @@ const SHELL = [
   'js/logic/pick.js',
   'js/data/tasks.js',
   'js/data/phrases.js',
+  'js/data/phrases-more.js',
+  'js/data/songs.js',
   'js/coach.js',
   'js/nav.js',
   'js/sheet.js',
