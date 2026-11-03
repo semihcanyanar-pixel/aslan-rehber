@@ -22,6 +22,11 @@ function ageText(now) {
   return m === 0 ? `${days} günlük` : `${m}. ay · ${days} günlük`;
 }
 
+function greeting(d) {
+  const h = d.getHours();
+  return h < 5 ? 'İyi geceler' : h < 12 ? 'Günaydın' : h < 18 ? 'İyi günler' : 'İyi akşamlar';
+}
+
 export function render(root) {
   const who = getProfile() ?? 'baba';
   const now = new Date();
@@ -76,10 +81,16 @@ export function render(root) {
     root.innerHTML = `
       <main class="screen bugun">
         <div class="bugun-band">
+          <div class="band-top">
           <span class="date">${date}</span>
           <div class="band-actions">
             <a class="icon-btn" href="#/ayarlar" aria-label="Ayarlar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="${GEAR}"/></svg></a>
             <a class="avatar" href="#/profil" aria-label="Profil: ${who === 'baba' ? 'Baba' : 'Anne'}"><img src="assets/av_${who}.jpg" alt=""></a>
+          </div>
+          </div>
+          <div class="band-hello">
+            <h1>${greeting(now)}, ${who === 'baba' ? 'Baba' : 'Anne'}</h1>
+            <p>Aslan'la bugünün küçük anları hazır.</p>
           </div>
         </div>
 

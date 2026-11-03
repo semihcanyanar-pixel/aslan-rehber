@@ -73,4 +73,5 @@ export const VIDEOS = {
 export const videosFor = (taskId) => (VIDEOS[taskId] ?? []).filter((x) => x.approved);
 export const videoFor = (taskId) => videosFor(taskId)[0] ?? null;
 export const watchUrl = (id) => `https://www.youtube.com/watch?v=${id}`;
+export const thumbUrl = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 export const embedUrl = (id) => `https://www.youtube-nocookie.com/embed/${id}?rel=0&playsinline=1`;

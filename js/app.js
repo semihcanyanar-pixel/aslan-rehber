@@ -8,11 +8,13 @@ import { render as renderIngilizce } from './screens/ingilizce.js';
 import { render as renderGorev } from './screens/gorev.js';
 import { render as renderGelisim } from './screens/gelisim.js';
 import { render as renderKaynaklar } from './screens/kaynaklar.js';
+import { render as renderTakip } from './screens/takip.js';
 import { render as renderGiris } from './screens/giris.js';
 import { render as renderKurulum } from './screens/kurulum.js';
 
 const routes = {
   '#/kaynaklar': renderKaynaklar,
+  '#/takip': renderTakip,
   '#/gelisim': renderGelisim,
   '#/ingilizce': renderIngilizce,
   '#/profil': renderProfil,

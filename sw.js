@@ -1,4 +1,4 @@
-const CACHE = 'aslan-v3';
+const CACHE = 'aslan-v4';
 const SHELL = [
   './',
   'js/cloud.js',
@@ -30,6 +30,8 @@ const SHELL = [
   'js/screens/kaynaklar.js',
   'js/data/milestones.js',
   'js/screens/gelisim.js',
+  'js/screens/takip.js',
+  'js/logic/stats.js',
   'js/categories.js',
   'js/screens/gorev.js',
   'js/data/audio-list.js',

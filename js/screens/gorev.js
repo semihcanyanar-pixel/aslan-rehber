@@ -1,6 +1,6 @@
 import { TASKS } from '../data/tasks.js';
 import { PACKS } from '../data/phrases.js';
-import { videosFor, watchUrl, embedUrl } from '../data/videos.js';
+import { videosFor, watchUrl, embedUrl, thumbUrl } from '../data/videos.js';
 import { getProfile, getLevels, getDone, toggleDone, dateKey } from '../state.js';
 import { pickDay } from '../logic/pick.js';
 import { CATEGORY, IMAGES, IMAGE_ALT, categoryIcon } from '../categories.js';
@@ -8,7 +8,7 @@ import { openCoach, coachIcon, phraseListHtml, bindListen, stopSpeaking } from '
 
 const BACK = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F2B26" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
 const CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5E7E6B" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
-const PLAY = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
+const PLAY = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>';
 
 // Resimli (tummy time) görevler için "söyleyeceğin cümle": baba İngilizce, anne Türkçe.
 const ANNE_PHRASE = '“Aferin oğluma, ne güçlüsün!”';
@@ -106,12 +106,12 @@ export function render(root, navigate, id) {
                    ${videos
                      .map(
                        (video, i) => `<div class="howto-frame" data-video-frame="${i}">
-                     <button class="howto-load" data-video-load="${i}">${PLAY}<span>Videoyu göster</span></button>
+                     <button class="howto-load" data-video-load="${i}" aria-label="Videoyu oynat: ${video.title}"><img src="${thumbUrl(video.id)}" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="howto-play">${PLAY}</span></button>
                    </div>
                    <p class="howto-small">${video.title}. <a href="${watchUrl(video.id)}" target="_blank" rel="noopener noreferrer">YouTube'da aç</a></p>`
                      )
                      .join('')}
-                   <p class="howto-small">Videolar YouTube'dan yüklenir, internet ister; örnek amaçlıdır. Aslan'ın hâli ve doktorunun önerisi önce gelir.</p>
+                   <p class="howto-small">Videolar ve önizleme resimleri YouTube'dan yüklenir, internet ister; örnek amaçlıdır. Aslan'ın hâli ve doktorunun önerisi önce gelir.</p>
                  </section>`
               : ''
           }
