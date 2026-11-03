@@ -114,8 +114,8 @@ export const PACKS = Object.fromEntries(
 const TASK_PACK = {
   '0-3-t1': 'tummy', '0-3-t2': 'tummy', '0-3-t3': 'sarki', '0-3-t4': 'takip', '0-3-t5': 'kesif',
   '0-3-t6': 'sohbet', '0-3-t7': 'konusma', '0-3-t8': 'konusma', '0-3-t9': 'bez', '0-3-t10': 'kitap',
-  '0-3-z1': 'bez', '0-3-z2': 'sohbet', '0-3-z3': 'kitap', '0-3-z4': 'takip', '0-3-z5': 'kesif',
-  '0-3-z6': 'ayna', '0-3-z7': 'cee', '0-3-z8': 'sevgi', '0-3-z9': 'konusma',
+  '0-3-z1': 'bez', '0-3-z2': 'sohbet', '0-3-z3': 'takip', '0-3-z4': 'kesif',
+  '0-3-z5': 'ayna', '0-3-z6': 'cee', '0-3-z7': 'sevgi', '0-3-z8': 'konusma', '0-3-t11': 'kitap',
 };
 const CATEGORY_PACK = { hareket: 'hareket', bilissel: 'kesif', dil: 'konusma', duygusal: 'sevgi' };
 
