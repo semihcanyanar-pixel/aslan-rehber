@@ -13,7 +13,7 @@ const NONE = [];
 const RAW = {
   '0-3': {
     temel: [
-      ['sabah', 'ikisi', 'yok', 'hareket', 'Kısa tummy time', 'Bez değişiminden ya da uykudan sonra, Aslan uyanıkken ve gözetim altındayken 3–5 dakikayla başla. Günde 2–3 kez; 7. haftaya kadar günde toplam 15–30 dakikaya çıkar.', AAP],
+      ['sabah', 'ikisi', 'yok', 'hareket', 'Kısa tummy time', 'Bez değişiminden ya da uykudan sonra, Aslan uyanıkken ve gözetim altındayken 3–5 dakikayla başla. Günde 2–3 kez; 7. haftaya kadar günde toplam 15–30 dakikaya çıkar.', AAP, { image: 'gogus' }],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Göğüste tummy time', 'En kolay yol: sırtüstü uzan, Aslan göğsünde. Sonra yerde battaniye, oyuncak tam uzanamayacağı mesafede.', NONE, { image: 'gogus' }],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Şarkıyla kol-bacak hareketi', 'Şarkı söylerken kollarını ve bacaklarını nazikçe hareket ettir.', CDC],
       ['ogle', 'ikisi', 'yok', 'bilissel', 'Görsel takip oyunu', 'Parlak bir oyuncağı yavaşça sağdan sola, yukarıdan aşağı gezdir; gözüyle takip ediyor mu bak.', CDC],
@@ -38,7 +38,7 @@ const RAW = {
   },
   '4-6': {
     temel: [
-      ['sabah', 'ikisi', 'yok', 'hareket', 'Tummy time devam', 'Hareket etmeye başlamamış bebek için gün içine yayılmış en az 30 dakika.', WHO],
+      ['sabah', 'ikisi', 'yok', 'hareket', 'Tummy time devam', 'Hareket etmeye başlamamış bebek için gün içine yayılmış en az 30 dakika.', WHO, { image: 'gogus' }],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Oyuncak çemberi', 'Oyuncakları etrafına daire şeklinde diz, farklı yönlere uzansın.', AAP],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Yerde serbest oyun', 'Yerde her gün serbest oyun; yuvarlanmayı teşvik etmek için oyuncağı yan tarafa koy.', NONE],
       ['ogle', 'ikisi', 'yok', 'hareket', 'Zıplatma oyunu', 'Koltuk altından tutup ayaklarını kucağına bastırarak zıplat.', CDC],

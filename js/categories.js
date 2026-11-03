@@ -6,6 +6,11 @@ export const CATEGORY = {
 };
 
 export const IMAGES = { gogus: { baba: 'assets/baba.jpg', anne: 'assets/anne.jpg' } };
+// Gerçek hareket için kare dizisi: aynı kadrajdan çekilmiş kareler gelince buraya yaz, ör.
+//   gogus: { baba: ['assets/frames/gogus-baba-1.jpg', ...], anne: [...] }
+// "Canlandır" kareleri yumuşak geçişle döngüye sokar; kare yoksa yalnızca yavaş yakınlaşma olur.
+export const FRAMES = {};
+
 export const IMAGE_ALT = {
   baba: 'Baba kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, yüz yüze bakışıyorlar',
   anne: 'Anne kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, gülümseyerek bakışıyorlar',

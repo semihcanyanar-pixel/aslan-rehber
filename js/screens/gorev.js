@@ -2,7 +2,7 @@ import { TASKS } from '../data/tasks.js';
 import { PACKS } from '../data/phrases.js';
 import { getProfile, getLevels, getDone, toggleDone, dateKey } from '../state.js';
 import { pickDay } from '../logic/pick.js';
-import { CATEGORY, IMAGES, IMAGE_ALT, categoryIcon } from '../categories.js';
+import { CATEGORY, IMAGES, IMAGE_ALT, FRAMES, categoryIcon } from '../categories.js';
 import { openCoach, coachIcon, phraseListHtml, bindListen, stopSpeaking } from '../coach.js';
 
 const HEART = 'M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z';
@@ -15,6 +15,23 @@ const ANNE_PHRASE = '“Aferin oğluma, ne güçlüsün!”';
 
 const SAFETY_TUMMY =
   'Tummy time yalnızca bebek uyanıkken ve yakın gözetim altındayken yapılır. Sen uykuya dalıyorsan hemen bitir. Uyku her zaman sırtüstüdür; karnüstü bir uyku pozisyonu değildir. Kaynak: AAP';
+
+// Kareleri sırayla, yumuşak geçişle döngüye sokar (kare başına ~1,8 sn). Hareket azaltma açıksa ilk karede kalır.
+function playFrames(imgs) {
+  const n = imgs.length;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fade = 0.15 / n;
+  imgs.forEach((img, i) => {
+    const start = i / n;
+    const end = (i + 1) / n;
+    const keys = [];
+    if (i > 0) keys.push({ offset: 0, opacity: 0 }, { offset: start - fade, opacity: 0 });
+    keys.push({ offset: start, opacity: 1 }, { offset: end - fade, opacity: 1 }, { offset: end, opacity: 0 });
+    if (i === 0) keys.push({ offset: 1 - fade, opacity: 0 }, { offset: 1, opacity: 1 });
+    else if (end < 1) keys.push({ offset: 1, opacity: 0 });
+    img.animate(keys, { duration: n * 1800, iterations: Infinity });
+  });
+}
 
 export function render(root, navigate, id) {
   const task = TASKS.find((t) => t.id === id);
@@ -33,6 +50,8 @@ export function render(root, navigate, id) {
     stopSpeaking();
     const done = getDone(key).includes(id);
     const image = task.image && IMAGES[task.image]?.[view];
+    const seq = task.image && FRAMES[task.image]?.[view];
+    const frames = seq && seq.length > 1 ? seq : null;
     const sources = task.source.length ? task.source : ['Plan'];
     const babaNote = me === 'baba' && task.babaNote ? `<p class="task-note">${task.babaNote}</p>` : '';
     const phrase = PACKS.tummy.phrases[1];
@@ -40,7 +59,13 @@ export function render(root, navigate, id) {
     root.innerHTML = `
       <main class="screen gorev">
         <div class="hero${image ? '' : ' hero--plain'}" style="${image ? '' : `background:${cat.bg}`}">
-          ${image ? `<img src="${image}" alt="${IMAGE_ALT[view]}" class="${playing ? 'live' : 'still'}">` : `<span class="hero-icon">${categoryIcon(cat, 56)}</span>`}
+          ${
+            image
+              ? `<div class="hero-art"><img src="${image}" alt="${IMAGE_ALT[view]}" class="${playing && !frames ? 'live' : 'still'}">${
+                  playing && frames ? frames.map((f) => `<img class="frame" src="${f}" alt="">`).join('') : ''
+                }</div>`
+              : `<span class="hero-icon">${categoryIcon(cat, 56)}</span>`
+          }
           ${
             image && playing
               ? `<span class="pop">${BUBBLE[view]}</span>
@@ -88,6 +113,7 @@ export function render(root, navigate, id) {
         </div>
       </main>`;
 
+    if (playing && frames) playFrames(root.querySelectorAll('.hero-art img.frame'));
     root.querySelector('[data-play]')?.addEventListener('click', () => {
       playing = !playing;
       draw();

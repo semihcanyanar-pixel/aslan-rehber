@@ -39,7 +39,7 @@ export function render(root, navigate) {
       <div class="profil-summary">
         <span class="label">Bu cihazda</span>
         <span class="value" data-summary></span>
-        <span class="note">Görev kartlarında ve görsellerde <span data-who-label></span> görünür.</span>
+        <span class="summary-note">Görev kartlarında ve görsellerde <span data-who-label></span> görünür.</span>
       </div>
 
       <button class="btn-primary" data-cta></button>

@@ -70,14 +70,6 @@ export function render(root, navigate) {
           </div>
         </section>
 
-        <section class="note note--peach">
-          <span class="avatar"><img src="assets/av_anne.jpg" alt=""></span>
-          <div>
-            <span class="note-title">Dil kuralı değişmez</span>
-            <span class="note-text">İngilizce kartlar yalnızca baba profiline gider. Anne profilinde seviye sadece Türkçe kartların sayısını değiştirir; anneye hiçbir seviyede İngilizce görev verilmez.</span>
-          </div>
-        </section>
-
         <section class="note note--card">
           <span class="note-title">Bilmen gerekenler</span>
           <span class="note-text">Tüm kartlar kaynaklıdır (WHO, CDC, AAP, Harvard); uygulama içerik uydurmaz. Uygulama tanı koymaz. Gelişimle ilgili içini rahatsız eden bir şey olursa beklemeden çocuk doktoruna danış.</span>
