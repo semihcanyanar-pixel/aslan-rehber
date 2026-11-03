@@ -1,6 +1,11 @@
-const CACHE = 'aslan-v1';
+const CACHE = 'aslan-v2';
 const SHELL = [
   './',
+  'js/cloud.js',
+  'js/firebase-config.js',
+  'js/logic/sync.js',
+  'js/screens/giris.js',
+  'js/screens/kurulum.js',
   'index.html',
   'manifest.webmanifest',
   'css/tokens.css',
@@ -53,13 +58,18 @@ self.addEventListener('activate', (e) => {
 });
 
 // Önce ağ, olmazsa önbellek: güncellemeler hemen görünür, çevrimdışı da açılır.
+// Kendi dosyalarımız ve Firebase kitaplığı (sabit sürüm, gstatic) önbelleğe alınır; Firestore/Auth ağ istekleri geçer.
+const cacheable = (url) => url.origin === location.origin || (url.hostname === 'www.gstatic.com' && url.pathname.startsWith('/firebasejs/'));
+
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'GET' || new URL(e.request.url).origin !== location.origin) return;
+  if (e.request.method !== 'GET' || !cacheable(new URL(e.request.url))) return;
   e.respondWith(
     fetch(e.request)
       .then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(e.request, copy));
+        if (res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then((c) => c.put(e.request, copy));
+        }
         return res;
       })
       .catch(() => caches.match(e.request))

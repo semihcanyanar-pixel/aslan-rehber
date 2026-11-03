@@ -1,6 +1,6 @@
 import { getProfile, getLevels, getDone, toggleDone, dateKey } from '../state.js';
 import { pickDay } from '../logic/pick.js';
-import { ageInMonths, BABY_BIRTH } from '../logic/period.js';
+import { ageInMonths, getBirthISO } from '../logic/period.js';
 import { openCoach, coachIcon } from '../coach.js';
 import { tabbar } from '../nav.js';
 import { CATEGORY, IMAGES, IMAGE_ALT, categoryIcon } from '../categories.js';
@@ -16,7 +16,7 @@ function currentSlot(now) {
 }
 
 function ageText(now) {
-  const birth = new Date(BABY_BIRTH + 'T00:00:00');
+  const birth = new Date(getBirthISO() + 'T00:00:00');
   const days = Math.floor((new Date(now.getFullYear(), now.getMonth(), now.getDate()) - birth) / 86400000);
   const m = ageInMonths(now);
   return m === 0 ? `${days} günlük` : `${m}. ay · ${days} günlük`;

@@ -1,5 +1,6 @@
 import { getLevels, setLevels } from '../state.js';
 import { PERIODS, currentPeriod } from '../logic/period.js';
+import { signOutUser, signedInEmail } from '../cloud.js';
 
 const LEVELS = {
   rahat: {
@@ -76,6 +77,12 @@ export function render(root, navigate) {
           <span class="note-small">Ayarlar iki profilde ortaktır.</span>
         </section>
 
+        <section class="note note--card">
+          <span class="note-title">Hesap</span>
+          <span class="note-text" data-email></span>
+          <button class="btn-ghost" data-logout>Çıkış yap</button>
+        </section>
+
         <button class="btn-primary" data-save>Kaydet</button>
       </div>
     </main>`;
@@ -95,6 +102,12 @@ export function render(root, navigate) {
         update(card);
       })
     );
+  });
+
+  root.querySelector('[data-email]').textContent = signedInEmail() ?? 'Çevrimdışı mod: giriş bilgisi şu an doğrulanamıyor.';
+  root.querySelector('[data-logout]').addEventListener('click', async () => {
+    if (!window.confirm('Bu cihazdan çıkış yapılsın mı? Verilerin hesabında durur, tekrar girince geri gelir.')) return;
+    await signOutUser();
   });
 
   root.querySelector('[data-save]').addEventListener('click', () => {
