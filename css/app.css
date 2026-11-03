@@ -246,14 +246,8 @@ body.sheet-open { overflow: hidden; }
 .hero { position: relative; background: var(--peach); overflow: hidden; padding-bottom: 28px; }
 .hero-art { position: relative; }
 .hero-art img { display: block; width: 100%; height: auto; }
-.hero-art img.frame { position: absolute; inset: 0; height: 100%; opacity: 0; }
 .hero--plain { height: 170px; padding-bottom: 0; display: flex; align-items: center; justify-content: center; }
 .hero-back { position: absolute; left: 16px; top: calc(16px + env(safe-area-inset-top)); width: 44px; height: 44px; border-radius: 22px; background: rgba(251, 247, 241, 0.92); display: flex; align-items: center; justify-content: center; }
-.play-btn { position: absolute; right: 16px; bottom: 44px; height: 44px; padding: 0 18px; border: none; border-radius: 22px; background: rgba(251, 247, 241, 0.94); color: var(--text); font-size: 14px; font-weight: 800; }
-.hero .pop { position: absolute; top: 70px; right: 16px; background: var(--card); border-radius: 18px; padding: 8px 14px; font-size: 16px; font-weight: 900; box-shadow: 0 6px 16px -8px rgba(60, 50, 35, 0.5); }
-.hero .h1 { position: absolute; left: 50%; top: 42%; }
-.hero .h2 { position: absolute; left: 56%; top: 50%; opacity: 0; }
-.hero-art img.live { transform-origin: 60% 45%; }
 
 .panel { margin-top: -28px; position: relative; flex: 1; background: var(--card); border-radius: 30px 30px 0 0; padding: 22px 18px calc(28px + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 16px; }
 .panel-head { display: flex; flex-direction: column; gap: 8px; }
@@ -271,15 +265,16 @@ body.sheet-open { overflow: hidden; }
 .safety-note { background: var(--peach-light); border-radius: var(--r-button); padding: 14px 16px; display: flex; gap: 12px; font-size: 14px; line-height: 1.5; font-weight: 600; color: #5E3A22; }
 .safety-note svg { flex: none; }
 
-@keyframes kb { 0%, 100% { transform: scale(1.02) translate(0, 0); } 50% { transform: scale(1.08) translate(-1.5%, -1%); } }
-@keyframes pop { 0%, 8% { opacity: 0; transform: translateY(8px) scale(0.9); } 18%, 70% { opacity: 1; transform: translateY(0) scale(1); } 84%, 100% { opacity: 0; transform: translateY(-4px); } }
-@keyframes rise { 0% { opacity: 0; transform: translateY(0) scale(0.6); } 20% { opacity: 1; transform: translateY(-8px) scale(1); } 100% { opacity: 0; transform: translateY(-46px) scale(0.9); } }
-@media (prefers-reduced-motion: no-preference) {
-  .hero-art img.live { animation: kb 6s ease-in-out infinite; }
-  .hero .pop { animation: pop 4s ease-in-out infinite; }
-  .hero .h1 { animation: rise 3s ease-out infinite; }
-  .hero .h2 { animation: rise 3s ease-out 1.4s infinite; }
-}
+/* Nasıl yapılır? (kurum videosu, yalnızca ebeveyn için) */
+.howto { background: var(--beige); border-radius: 18px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.howto-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.howto-title { font-size: 17px; font-weight: 900; }
+.howto-note { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 700; color: #5E3A22; }
+.howto-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: var(--segment); }
+.howto-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.howto-load { position: absolute; inset: 0; width: 100%; border: none; background: transparent; color: var(--green-darker); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 16px; font-weight: 900; }
+.howto-small { margin: 0; font-size: 12px; line-height: 1.5; font-weight: 600; color: var(--text-2); }
+.howto-small a { color: var(--green-dark); font-weight: 800; }
 
 /* Gelişim günlüğü */
 .gel-band { background: var(--green); border-radius: 0 0 32px 32px; padding: calc(22px + env(safe-area-inset-top)) 18px 18px; display: flex; flex-direction: column; gap: 14px; }

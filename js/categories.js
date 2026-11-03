@@ -10,11 +10,6 @@ export const IMAGES = {
   gogus: { baba: 'assets/baba.jpg', anne: 'assets/anne.jpg' },
   yer: { baba: 'assets/yer-baba.jpg', anne: 'assets/yer-anne.jpg' },
 };
-// Gerçek hareket için kare dizisi: aynı kadrajdan çekilmiş kareler gelince buraya yaz, ör.
-//   gogus: { baba: ['assets/frames/gogus-baba-1.jpg', ...], anne: [...] }
-// "Canlandır" kareleri yumuşak geçişle döngüye sokar; kare yoksa yalnızca yavaş yakınlaşma olur.
-export const FRAMES = {};
-
 export const IMAGE_ALT = {
   gogus: {
     baba: 'Baba kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, yüz yüze bakışıyorlar',

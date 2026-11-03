@@ -2,6 +2,7 @@ const CACHE = 'aslan-v2';
 const SHELL = [
   './',
   'js/cloud.js',
+  'js/data/videos.js',
   'js/firebase-config.js',
   'js/logic/sync.js',
   'js/screens/giris.js',
