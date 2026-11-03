@@ -59,7 +59,7 @@ export function render(root) {
               </div>
               <span class="cat-badge" style="background:${cat.bg}"><svg width="16" height="16" viewBox="0 0 24 24" ${cat.stroke ? `fill="none" stroke="${cat.fg}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"` : `fill="${cat.fg}"`} aria-hidden="true"><path d="${cat.path}"/></svg></span>
             </div>
-            ${image ? `<a class="task-img-link" href="#/gorev/${task.id}"><img class="task-img" src="${image}" alt="${IMAGE_ALT[who]}"><span class="open-pill">Rehberi aç</span></a>` : ''}
+            ${image ? `<a class="task-img-link" href="#/gorev/${task.id}"><img class="task-img" src="${image}" alt="${IMAGE_ALT[task.image][who]}"><span class="open-pill">Rehberi aç</span></a>` : ''}
             <p class="task-desc">${task.description}</p>
             ${babaNote}
             <div class="task-foot">

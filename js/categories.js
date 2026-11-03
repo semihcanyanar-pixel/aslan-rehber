@@ -5,15 +5,25 @@ export const CATEGORY = {
   bilissel: { label: 'Bilişsel', bg: 'var(--tag-bilissel-bg)', fg: '#8C6A1E', stroke: true, path: 'M4 5c3-1 6 0 8 2 2-2 5-3 8-2v13c-3-1-6 0-8 2-2-2-5-3-8-2z' },
 };
 
-export const IMAGES = { gogus: { baba: 'assets/baba.jpg', anne: 'assets/anne.jpg' } };
+// gogus: ebeveynin göğsünde tummy time · yer: düz zeminde, mat üzerinde tummy time
+export const IMAGES = {
+  gogus: { baba: 'assets/baba.jpg', anne: 'assets/anne.jpg' },
+  yer: { baba: 'assets/yer-baba.jpg', anne: 'assets/yer-anne.jpg' },
+};
 // Gerçek hareket için kare dizisi: aynı kadrajdan çekilmiş kareler gelince buraya yaz, ör.
 //   gogus: { baba: ['assets/frames/gogus-baba-1.jpg', ...], anne: [...] }
 // "Canlandır" kareleri yumuşak geçişle döngüye sokar; kare yoksa yalnızca yavaş yakınlaşma olur.
 export const FRAMES = {};
 
 export const IMAGE_ALT = {
-  baba: 'Baba kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, yüz yüze bakışıyorlar',
-  anne: 'Anne kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, gülümseyerek bakışıyorlar',
+  gogus: {
+    baba: 'Baba kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, yüz yüze bakışıyorlar',
+    anne: 'Anne kanepede yarı uzanmış, göğsündeki Aslan başını kaldırmış, gülümseyerek bakışıyorlar',
+  },
+  yer: {
+    baba: 'Baba yerde mat üzerinde yan yatmış, karnüstü yatan Aslan başını kaldırmış, babasına bakıyor; yanlarında oyuncaklar ve harf blokları var',
+    anne: 'Anne yerde mat üzerinde diz çökmüş, karnüstü yatan Aslan başını kaldırmış, annesine bakıyor; arkada ayna ve ayıcık var',
+  },
 };
 
 export function categoryIcon(cat, size = 16) {

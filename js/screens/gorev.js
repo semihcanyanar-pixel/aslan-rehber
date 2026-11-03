@@ -100,7 +100,7 @@ export function render(root, navigate, id) {
         <div class="hero${image ? '' : ' hero--plain'}" style="${image ? '' : `background:${cat.bg}`}">
           ${
             image
-              ? `<div class="hero-art"><img src="${image}" alt="${IMAGE_ALT[view]}" class="${playing && !frames ? 'live' : 'still'}">${
+              ? `<div class="hero-art"><img src="${image}" alt="${IMAGE_ALT[task.image][view]}" class="${playing && !frames ? 'live' : 'still'}">${
                   playing && frames ? frames.map((f) => `<img class="frame" src="${f}" alt="">`).join('') : ''
                 }</div>`
               : `<span class="hero-icon">${categoryIcon(cat, 56)}</span>`

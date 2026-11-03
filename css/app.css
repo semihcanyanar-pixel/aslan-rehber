@@ -174,7 +174,7 @@ a { color: var(--green-dark); }
 .task-head .cat { font-weight: 700; color: var(--text-2); }
 .now-tag { display: inline-block; margin-bottom: 4px; background: var(--green); color: #fff; border-radius: 10px; padding: 2px 8px; font-size: 11px; font-weight: 900; letter-spacing: 0.6px; }
 .cat-badge { width: 30px; height: 30px; flex: none; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
-.task-img { display: block; width: 100%; height: auto; border-radius: 14px; }
+.task-img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 40%; border-radius: 14px; }
 .task-desc { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: #4C463D; }
 .task-note { margin: 0; font-size: 13px; line-height: 1.4; font-weight: 800; color: var(--tag-dil-fg); background: var(--tag-dil-bg); border-radius: 12px; padding: 6px 10px; }
 .task-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
