@@ -88,5 +88,22 @@ export function pickDay({ date, parent, levels, catalog = TASKS }) {
       if (i >= 0) slot.cards[i] = { task: en };
     }
   }
+
+  // Herkes her gün bir kitap kartı görür (AAP: kitap paylaşımı doğumdan itibaren): yoksa o dönemin kitap kartı,
+  // önce akşam diliminde, olmazsa diğerlerinde, fiziksel/İngilizce/üst dönem olmayan bir kartın yerine geçer.
+  if (!days.some((s) => s.cards.some((c) => c.task.book))) {
+    const bookPool = mine.filter((t) => t.book);
+    if (bookPool.length) {
+      const book = bookPool[d % bookPool.length];
+      const order = [days.find((s) => s.slot === 'aksam'), ...days.filter((s) => s.slot !== 'aksam')];
+      for (const slot of order) {
+        const i = slot.cards.findIndex((c) => c.task.category !== 'hareket' && !c.stretch && c.task.lang !== 'en');
+        if (i >= 0) {
+          slot.cards[i] = { task: book };
+          break;
+        }
+      }
+    }
+  }
   return days;
 }

@@ -1,6 +1,6 @@
 import { TASKS } from '../data/tasks.js';
 import { PACKS } from '../data/phrases.js';
-import { videoFor, watchUrl, embedUrl } from '../data/videos.js';
+import { videosFor, watchUrl, embedUrl } from '../data/videos.js';
 import { getProfile, getLevels, getDone, toggleDone, dateKey } from '../state.js';
 import { pickDay } from '../logic/pick.js';
 import { CATEGORY, IMAGES, IMAGE_ALT, categoryIcon } from '../categories.js';
@@ -23,7 +23,7 @@ export function render(root, navigate, id) {
   const me = getProfile() ?? 'baba';
   const cat = CATEGORY[task.category];
   const key = dateKey();
-  const video = videoFor(id);
+  const videos = videosFor(id);
   const inToday = pickDay({ date: new Date(), parent: me, levels: getLevels() })
     .flatMap((s) => s.cards)
     .some((c) => c.task.id === id);
@@ -99,14 +99,19 @@ export function render(root, navigate, id) {
           </div>
 
           ${
-            video
+            videos.length
               ? `<section class="howto" aria-label="Nasıl yapılır">
-                   <div class="howto-head"><span class="howto-title">Nasıl yapılır?</span><span class="chip">Video: ${video.org}</span></div>
+                   <div class="howto-head"><span class="howto-title">Nasıl yapılır?</span><span class="chip">Video: ${videos[0].org}</span></div>
                    <p class="howto-note">Videoyu önce sen izle, sonra Aslan'la yap. Aslan ekrana bakmasın; 1 yaşından küçüklere ekran önerilmez (WHO).</p>
-                   <div class="howto-frame" data-video-frame>
-                     <button class="howto-load" data-video-load>${PLAY}<span>Videoyu göster</span></button>
+                   ${videos
+                     .map(
+                       (video, i) => `<div class="howto-frame" data-video-frame="${i}">
+                     <button class="howto-load" data-video-load="${i}">${PLAY}<span>Videoyu göster</span></button>
                    </div>
-                   <p class="howto-small">${video.title}. Video YouTube'dan yüklenir, internet ister; örnek amaçlıdır. Aslan'ın hâli ve doktorunun önerisi önce gelir. <a href="${watchUrl(video.id)}" target="_blank" rel="noopener noreferrer">YouTube'da aç</a></p>
+                   <p class="howto-small">${video.title}. <a href="${watchUrl(video.id)}" target="_blank" rel="noopener noreferrer">YouTube'da aç</a></p>`
+                     )
+                     .join('')}
+                   <p class="howto-small">Videolar YouTube'dan yüklenir, internet ister; örnek amaçlıdır. Aslan'ın hâli ve doktorunun önerisi önce gelir.</p>
                  </section>`
               : ''
           }
@@ -155,9 +160,12 @@ export function render(root, navigate, id) {
 
     if (task.timer) bindTimer();
     // Video, "Videoyu göster"e basılana kadar yüklenmez (Google'a istek gitmez); gizlilik modlu oynatıcı.
-    root.querySelector('[data-video-load]')?.addEventListener('click', () => {
-      root.querySelector('[data-video-frame]').innerHTML = `<iframe src="${embedUrl(video.id)}" title="${video.title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-    });
+    root.querySelectorAll('[data-video-load]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const video = videos[Number(btn.dataset.videoLoad)];
+        root.querySelector(`[data-video-frame="${btn.dataset.videoLoad}"]`).innerHTML = `<iframe src="${embedUrl(video.id)}" title="${video.title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+      })
+    );
     root.querySelectorAll('[data-view]').forEach((b) =>
       b.addEventListener('click', () => {
         view = b.dataset.view;
