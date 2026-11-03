@@ -147,8 +147,8 @@ export function render(root, navigate, id) {
           ${
             task.image
               ? `<div class="segment segment--2" role="tablist" aria-label="Kim yapıyor">
-                   <button role="tab" data-view="baba" aria-selected="${view === 'baba'}">Baba · English</button>
-                   <button role="tab" data-view="anne" aria-selected="${view === 'anne'}">Anne · Türkçe</button>
+                   <button role="tab" data-view="baba" aria-selected="${view === 'baba'}">Baba</button>
+                   <button role="tab" data-view="anne" aria-selected="${view === 'anne'}">Anne</button>
                  </div>
                  <section class="say-box">
                    <span class="say-label">Söyleyeceğin cümle</span>

@@ -69,24 +69,9 @@ a { color: var(--green-dark); }
 .profil-card .desc { font-size: 13px; line-height: 1.4; font-weight: 700; }
 .profil-card[aria-pressed="true"] { box-shadow: var(--shadow-ring); }
 .profil-card--anne { background: var(--peach); }
-.profil-card--anne .desc, .profil-card--anne .pill { color: #5E3A22; }
-.profil-card--anne .pill { color: var(--tag-duygusal-fg); }
+.profil-card--anne .desc { color: #5E3A22; }
 .profil-card--baba { background: var(--sage); }
 .profil-card--baba .desc { color: #33493C; }
-.profil-card--baba .pill { color: var(--green-darker); }
-
-.profil-summary {
-  background: var(--card);
-  border-radius: var(--r-card);
-  padding: 14px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  box-shadow: var(--shadow);
-}
-.profil-summary .label { font-size: 14px; font-weight: 700; color: var(--text-2); }
-.profil-summary .value { font-size: 17px; font-weight: 900; }
-.profil-summary .summary-note { font-size: 13px; font-weight: 600; color: var(--text-2); }
 
 .profil .btn-primary { margin-top: auto; }
 
