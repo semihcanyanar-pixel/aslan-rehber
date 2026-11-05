@@ -1,6 +1,7 @@
-const CACHE = 'aslan-v6';
+const CACHE = 'aslan-v7';
 const SHELL = [
   './',
+  'icons/icon-512.png',
   'js/cloud.js',
   'js/data/videos.js',
   'js/firebase-config.js',

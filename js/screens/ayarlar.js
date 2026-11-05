@@ -18,12 +18,12 @@ function openPasswordSheet(opener) {
     </header>
     <form class="note-form" novalidate>
       <label>Mevcut şifre<input name="current" type="password" autocomplete="current-password" required data-autofocus></label>
-      <button class="btn-link btn-link--end" type="button" data-forgot>Mevcut şifremi unuttum</button>
       <label>Yeni şifre (en az 6 karakter)<input name="next" type="password" autocomplete="new-password" minlength="6" required></label>
       <label>Yeni şifre (tekrar)<input name="again" type="password" autocomplete="new-password" required></label>
       <p class="form-error" role="alert" hidden></p>
       <p class="form-ok" role="status" hidden></p>
       <button class="btn-primary" type="submit">Şifreyi kaydet</button>
+      <button class="btn-link" type="button" data-forgot>Şifremi unuttum</button>
     </form>`,
     { opener, labelledBy: 'pw-title' }
   );

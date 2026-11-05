@@ -46,11 +46,30 @@ function resolve(hash) {
   return hash;
 }
 
+// Açılış ekranı (index.html'deki .boot): harf animasyonu bitene kadar, giriş durumu belli olsa bile görünür kalır.
+const BOOT_MS = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 600 : 2400;
+let bootTimeUp = false;
+let bootClosed = false;
+setTimeout(() => {
+  bootTimeUp = true;
+  route();
+}, BOOT_MS);
+
 function route() {
   const hash = resolve(location.hash);
   if (hash === null) {
-    root.innerHTML = '<main class="screen splash"><span class="avatar"><img src="assets/av_aslan.jpg" alt=""></span><p>Yükleniyor…</p></main>';
+    if (!root.querySelector('.boot')) root.innerHTML = '<main class="screen splash"><span class="avatar"><img src="assets/av_aslan.jpg" alt=""></span><p>Yükleniyor…</p></main>';
     return;
+  }
+  if (!bootClosed) {
+    if (!bootTimeUp) return;
+    bootClosed = true;
+    const boot = root.querySelector('.boot');
+    if (boot) {
+      boot.classList.add('is-out');
+      setTimeout(route, 300);
+      return;
+    }
   }
   if (location.hash !== hash) history.replaceState(null, '', hash);
   const gorev = hash.match(/^#\/gorev\/(.+)$/);
