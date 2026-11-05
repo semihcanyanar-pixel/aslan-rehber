@@ -1,4 +1,4 @@
-const CACHE = 'aslan-v5';
+const CACHE = 'aslan-v6';
 const SHELL = [
   './',
   'js/cloud.js',
