@@ -44,6 +44,40 @@ export async function signOutUser() {
 
 export const signedInEmail = () => sdk?.authInst.currentUser?.email ?? null;
 
+// Mevcut şifreyle kimliği yeniden doğrular, sonra yeni şifreyi kaydeder. Oturum açık kalır.
+export async function changePassword(current, next) {
+  const s = await loadCloud();
+  const user = s.authInst.currentUser;
+  if (!user?.email) throw { code: 'auth/requires-recent-login' };
+  await s.auth.reauthenticateWithCredential(user, s.auth.EmailAuthProvider.credential(user.email, current));
+  await s.auth.updatePassword(user, next);
+}
+
+export async function sendPasswordReset(email) {
+  const s = await loadCloud();
+  await s.auth.sendPasswordResetEmail(s.authInst, email);
+}
+
+export function describePasswordError(err) {
+  switch (err?.code) {
+    case 'auth/invalid-credential':
+    case 'auth/wrong-password':
+      return 'Mevcut şifre hatalı.';
+    case 'auth/weak-password':
+      return 'Yeni şifre çok zayıf. En az 6 karakter olmalı.';
+    case 'auth/too-many-requests':
+      return 'Çok fazla deneme yapıldı. Biraz bekleyip tekrar dene.';
+    case 'auth/requires-recent-login':
+      return 'Güvenlik için çıkış yapıp yeniden girmen gerekiyor.';
+    case 'auth/invalid-email':
+      return 'E-posta adresi geçersiz.';
+    case 'auth/network-request-failed':
+      return 'Bağlantı kurulamadı. İnternetini kontrol et.';
+    default:
+      return err?.message?.includes('import') || err instanceof TypeError ? 'Bağlantı kurulamadı. İnternetini kontrol et.' : 'İşlem yapılamadı. Biraz sonra tekrar dene.';
+  }
+}
+
 export function describeAuthError(err) {
   switch (err?.code) {
     case 'auth/invalid-credential':

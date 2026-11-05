@@ -1,6 +1,66 @@
 import { getLevels, setLevels } from '../state.js';
 import { PERIODS, currentPeriod } from '../logic/period.js';
-import { signOutUser, signedInEmail } from '../cloud.js';
+import { signOutUser, signedInEmail, changePassword, describePasswordError } from '../cloud.js';
+import { openSheet } from '../sheet.js';
+
+const CLOSE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+function openPasswordSheet(opener) {
+  if (!signedInEmail()) {
+    window.alert('Şifreyi değiştirmek için internet bağlantısı ve giriş gerekir.');
+    return;
+  }
+  const { el, close } = openSheet(
+    `
+    <header class="coach-head">
+      <div><h2 id="pw-title">Şifreyi değiştir</h2></div>
+      <button class="sheet-close" data-close aria-label="Kapat">${CLOSE}</button>
+    </header>
+    <form class="note-form" novalidate>
+      <label>Mevcut şifre<input name="current" type="password" autocomplete="current-password" required data-autofocus></label>
+      <label>Yeni şifre (en az 6 karakter)<input name="next" type="password" autocomplete="new-password" minlength="6" required></label>
+      <label>Yeni şifre (tekrar)<input name="again" type="password" autocomplete="new-password" required></label>
+      <p class="form-error" role="alert" hidden></p>
+      <p class="form-ok" role="status" hidden></p>
+      <button class="btn-primary" type="submit">Şifreyi kaydet</button>
+    </form>`,
+    { opener, labelledBy: 'pw-title' }
+  );
+  const form = el.querySelector('form');
+  const error = el.querySelector('.form-error');
+  const ok = el.querySelector('.form-ok');
+  const button = form.querySelector('button[type=submit]');
+  const fail = (msg) => {
+    error.textContent = msg;
+    error.hidden = false;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    error.hidden = true;
+    const { current, next, again } = form.elements;
+    if (!current.value || !next.value) return fail('Mevcut ve yeni şifreyi yaz.');
+    if (next.value.length < 6) return fail('Yeni şifre en az 6 karakter olmalı.');
+    if (next.value !== again.value) return fail('İki yeni şifre aynı değil.');
+    if (next.value === current.value) return fail('Yeni şifre mevcut şifreden farklı olmalı.');
+    button.disabled = true;
+    button.textContent = 'Kaydediliyor…';
+    try {
+      await changePassword(current.value, next.value);
+      form.reset();
+      ok.textContent = 'Şifren değişti. Bu cihazda oturum açık kalır.';
+      ok.hidden = false;
+      button.textContent = 'Tamam';
+      button.type = 'button';
+      button.disabled = false;
+      button.addEventListener('click', close, { once: true });
+    } catch (err) {
+      fail(describePasswordError(err));
+      button.disabled = false;
+      button.textContent = 'Şifreyi kaydet';
+    }
+  });
+}
 
 const LEVELS = {
   rahat: {
@@ -80,7 +140,10 @@ export function render(root, navigate) {
         <section class="note note--card">
           <span class="note-title">Hesap</span>
           <span class="note-text" data-email></span>
-          <button class="btn-ghost" data-logout>Çıkış yap</button>
+          <div class="btn-row">
+            <button class="btn-ghost" data-password>Şifreyi değiştir</button>
+            <button class="btn-ghost" data-logout>Çıkış yap</button>
+          </div>
         </section>
 
         <button class="btn-primary" data-save>Kaydet</button>
@@ -105,6 +168,8 @@ export function render(root, navigate) {
   });
 
   root.querySelector('[data-email]').textContent = signedInEmail() ?? 'Çevrimdışı mod: giriş bilgisi şu an doğrulanamıyor.';
+  const passwordButton = root.querySelector('[data-password]');
+  passwordButton.addEventListener('click', () => openPasswordSheet(passwordButton));
   root.querySelector('[data-logout]').addEventListener('click', async () => {
     if (!window.confirm('Bu cihazdan çıkış yapılsın mı? Verilerin hesabında durur, tekrar girince geri gelir.')) return;
     await signOutUser();

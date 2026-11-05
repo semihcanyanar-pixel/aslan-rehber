@@ -370,6 +370,10 @@ body.sheet-open { overflow: hidden; }
 .giris-head p { margin: 0; font-size: 14px; line-height: 1.5; font-weight: 600; color: var(--text-2); max-width: 320px; }
 .form-error { margin: 0; font-size: 14px; font-weight: 800; color: var(--tag-duygusal-fg); background: var(--peach-light); border-radius: 14px; padding: 10px 12px; }
 .form-error[hidden] { display: none; }
+.form-ok { margin: 0; font-size: 14px; font-weight: 800; color: var(--green-dark, #3A5444); background: #DDE7E0; border-radius: 14px; padding: 10px 12px; }
+.form-ok[hidden] { display: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-link { align-self: center; min-height: 44px; padding: 0 12px; border: none; background: none; color: var(--green, #5E7E6B); font: inherit; font-size: 15px; font-weight: 800; text-decoration: underline; }
 .btn-primary:disabled { opacity: 0.6; }
 .btn-ghost { align-self: flex-start; min-height: 44px; padding: 0 18px; border: none; border-radius: var(--r-button); background: var(--segment); color: var(--text); font-size: 15px; font-weight: 800; }
 .splash { align-items: center; justify-content: center; gap: 14px; color: var(--text-2); font-weight: 700; }
