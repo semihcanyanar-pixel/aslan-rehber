@@ -372,7 +372,9 @@ body.sheet-open { overflow: hidden; }
 .form-error[hidden] { display: none; }
 .form-ok { margin: 0; font-size: 14px; font-weight: 800; color: var(--green-dark, #3A5444); background: #DDE7E0; border-radius: 14px; padding: 10px 12px; }
 .form-ok[hidden] { display: none; }
-.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-row { display: flex; flex-direction: column; gap: 10px; }
+.btn-row .btn-ghost { align-self: stretch; width: 100%; min-height: 48px; }
+.btn-link.btn-link--end { align-self: flex-end; margin-top: -8px; min-height: 36px; }
 .btn-link { align-self: center; min-height: 44px; padding: 0 12px; border: none; background: none; color: var(--green, #5E7E6B); font: inherit; font-size: 15px; font-weight: 800; text-decoration: underline; }
 .btn-primary:disabled { opacity: 0.6; }
 .btn-ghost { align-self: flex-start; min-height: 44px; padding: 0 18px; border: none; border-radius: var(--r-button); background: var(--segment); color: var(--text); font-size: 15px; font-weight: 800; }
