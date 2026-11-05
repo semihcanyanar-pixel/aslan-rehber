@@ -1,4 +1,4 @@
-const CACHE = 'aslan-v7';
+const CACHE = 'aslan-v8';
 const SHELL = [
   './',
   'icons/icon-512.png',
@@ -72,7 +72,8 @@ const cacheable = (url) => url.origin === location.origin || (url.hostname === '
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET' || !cacheable(new URL(e.request.url))) return;
   e.respondWith(
-    fetch(e.request)
+    // no-cache: GitHub Pages dosyaları 10 dk tarayıcı önbelleğinde tutar; her seferinde sunucuya sorulsun (değişmediyse 304, ucuz).
+    fetch(e.request, new URL(e.request.url).origin === location.origin ? { cache: 'no-cache' } : undefined)
       .then((res) => {
         if (res.ok) {
           const copy = res.clone();
