@@ -1,6 +1,6 @@
 import { getLevels, setLevels } from '../state.js';
 import { PERIODS, currentPeriod } from '../logic/period.js';
-import { signOutUser, signedInEmail, changePassword, describePasswordError } from '../cloud.js';
+import { signOutUser, signedInEmail, changePassword, sendPasswordReset, describePasswordError } from '../cloud.js';
 import { openSheet } from '../sheet.js';
 
 const CLOSE = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -23,6 +23,7 @@ function openPasswordSheet(opener) {
       <p class="form-error" role="alert" hidden></p>
       <p class="form-ok" role="status" hidden></p>
       <button class="btn-primary" type="submit">Şifreyi kaydet</button>
+      <button class="btn-link" type="button" data-forgot>Mevcut şifremi unuttum</button>
     </form>`,
     { opener, labelledBy: 'pw-title' }
   );
@@ -34,6 +35,22 @@ function openPasswordSheet(opener) {
     error.textContent = msg;
     error.hidden = false;
   };
+
+  const forgot = form.querySelector('[data-forgot]');
+  forgot.addEventListener('click', async () => {
+    error.hidden = true;
+    ok.hidden = true;
+    forgot.disabled = true;
+    try {
+      const email = signedInEmail();
+      await sendPasswordReset(email);
+      ok.textContent = `Sıfırlama bağlantısı ${email} adresine gönderildi. Gelen kutunu ve spam klasörünü kontrol et.`;
+      ok.hidden = false;
+    } catch (err) {
+      fail(describePasswordError(err));
+    }
+    forgot.disabled = false;
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
